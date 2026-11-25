@@ -1,0 +1,271 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+    "name": "Maid Booking System",
+    "description": "Postman collection for the Maid Booking System REST APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Maids",
+      "item": [
+        {
+          "name": "Onboard Maid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Asha\",\n  \"locality\": \"Koramangala\",\n  \"gender\": \"FEMALE\",\n  \"rating\": 4.8,\n  \"hourlyRate\": 300,\n  \"skills\": [\"CLEANING\", \"COOKING\"],\n  \"availabilityWindows\": [\n    {\n      \"dayOfWeek\": \"MONDAY\",\n      \"startTime\": \"08:00:00\",\n      \"endTime\": \"18:00:00\"\n    },\n    {\n      \"dayOfWeek\": \"TUESDAY\",\n      \"startTime\": \"08:00:00\",\n      \"endTime\": \"18:00:00\"\n    },\n    {\n      \"dayOfWeek\": \"WEDNESDAY\",\n      \"startTime\": \"08:00:00\",\n      \"endTime\": \"18:00:00\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/maids",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "maids"]
+            }
+          }
+        },
+        {
+          "name": "Get Maid by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/maids/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "maids", "1"]
+            }
+          }
+        },
+        {
+          "name": "Discover Available Maids",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/maids/discover?locality=Koramangala&serviceType=CLEANING&startTime=2026-11-30T09:00:00&durationMinutes=120&minRating=4.5&maxHourlyRate=400&gender=FEMALE",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "maids", "discover"],
+              "query": [
+                { "key": "locality", "value": "Koramangala" },
+                { "key": "serviceType", "value": "CLEANING" },
+                { "key": "startTime", "value": "2026-11-30T09:00:00" },
+                { "key": "durationMinutes", "value": "120" },
+                { "key": "minRating", "value": "4.5" },
+                { "key": "maxHourlyRate", "value": "400" },
+                { "key": "gender", "value": "FEMALE" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Create Scheduled Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"cust-101\",\n  \"maidId\": 1,\n  \"serviceType\": \"CLEANING\",\n  \"bookingType\": \"SCHEDULED\",\n  \"startTime\": \"2026-11-30T09:00:00\",\n  \"durationMinutes\": 120\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings"]
+            }
+          }
+        },
+        {
+          "name": "Create Instant Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"cust-101\",\n  \"maidId\": 1,\n  \"serviceType\": \"CLEANING\",\n  \"bookingType\": \"INSTANT\",\n  \"durationMinutes\": 60\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings"]
+            }
+          }
+        },
+        {
+          "name": "Create Recurring Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"cust-101\",\n  \"maidId\": 1,\n  \"serviceType\": \"CLEANING\",\n  \"bookingType\": \"RECURRING\",\n  \"startTime\": \"2026-11-30T09:00:00\",\n  \"durationMinutes\": 120,\n  \"recurrencePattern\": \"WEEKDAYS\",\n  \"occurrences\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings"]
+            }
+          }
+        },
+        {
+          "name": "Get Booking by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Pay via UPI (Single Occurrence)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": 1,\n  \"occurrenceId\": 1,\n  \"paymentMethod\": \"UPI\",\n  \"idempotencyKey\": \"pay-req-001\",\n  \"details\": {\n    \"upiId\": \"user@upi\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            }
+          }
+        },
+        {
+          "name": "Pay via Card (Full Booking)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": 1,\n  \"paymentMethod\": \"CARD\",\n  \"idempotencyKey\": \"pay-req-002\",\n  \"details\": {\n    \"cardLast4\": \"4242\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            }
+          }
+        },
+        {
+          "name": "Pay via Wallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": 1,\n  \"paymentMethod\": \"WALLET\",\n  \"idempotencyKey\": \"pay-req-003\",\n  \"details\": {\n    \"walletId\": \"wallet-123\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cancellation",
+      "item": [
+        {
+          "name": "Cancel Single Occurrence",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"occurrenceId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "1", "cancel"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Entire Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "1", "cancel"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
